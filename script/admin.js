@@ -158,6 +158,9 @@ async function deleteProjets() {
     .then(response => {
         if (response.status === 204) {
             refreshPage(this.classList[0]);
+            modaleProjet();
+            displayWorks();
+            
         } else if (response.status === 401) {
             alert("Vous n'êtes pas autorisé à supprimer ce projet, merci de vous connecter avec un compte valide");
             window.location.href = "login.html";
@@ -263,6 +266,7 @@ async function addWork(event) {
             if (response.status === 201) {
                 alert("Projet ajouté avec succès :)");
                 closeModale(event);
+                displayWorks();
                 modaleProjets(dataAdmin);
             } else if (response.status === 400) {
                 alert("Merci de remplir tous les champs");
