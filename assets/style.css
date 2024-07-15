@@ -175,6 +175,12 @@ nav a {
 nav a:hover {
   color: #b1663c;
 }
+.logOut-btn {
+  cursor: pointer;
+}
+.logOut-btn:hover {
+  color: #b1663c;
+}
 
 #introduction {
   display: flex;

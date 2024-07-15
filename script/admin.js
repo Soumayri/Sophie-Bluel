@@ -82,8 +82,14 @@ const closeModale = function(e) {
 
     modale.setAttribute("aria-hidden", "true");
     modale.removeAttribute("aria-modal");
+    modale.style.display = "none";
 
     modale.querySelector(".js-modale-close").removeEventListener("click", closeModale);
+    modale.querySelector(".js-modale-stop").removeEventListener("click", stopPropagation);
+    modale.removeEventListener("click", closeModale);
+
+    modale = null;
+   
 };
 
 ///////////////////// Définit la "border" du click pour fermer la modale ////////////////
@@ -123,6 +129,7 @@ function adminPanel() {
             a.removeAttribute("aria-hidden");
             a.removeAttribute("style");
             AlreadyLogged.innerHTML = "logout";
+            AlreadyLogged.classList.add('logOut-btn')
             AlreadyLogged.addEventListener('click', function() {
                 if (AlreadyLogged.innerHTML === "logout") {
                     window.location.href = 'login.html'; // Redirection vers login.html
@@ -150,6 +157,7 @@ function deleteWork() {
 }
 
 /////////////////////////////// Supprimer le projet //////////////////////////////////
+
 async function deleteProjets() {
     await fetch(`http://localhost:5678/api/works/${this.classList[0]}`, {
         method: "DELETE",
@@ -157,16 +165,23 @@ async function deleteProjets() {
     })
     .then(response => {
         if (response.status === 204) {
-            refreshPage(this.classList[0]);
-            modaleProjet();
+            const projet = document.querySelector(`.js-projet-${this.classList[0]}`);
+            if (projet) {
+                projet.remove(); 
+            }
+            this.closest(".gallery__item-modale").remove(); 
             displayWorks();
-            
+            modaleProjets();
         } else if (response.status === 401) {
             alert("Vous n'êtes pas autorisé à supprimer ce projet, merci de vous connecter avec un compte valide");
             window.location.href = "login.html";
         }
+    })
+    .catch(error => {
+        console.error("Erreur:", error);
     });
 }
+
 
 /////////////////////////////////// Rafraichit les projets sans recharger la page /////////////////////////
 async function refreshPage(i) {
