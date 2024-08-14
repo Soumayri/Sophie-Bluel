@@ -158,7 +158,9 @@ function deleteWork() {
 
 /////////////////////////////// Supprimer le projet //////////////////////////////////
 
-async function deleteProjets() {
+async function deleteProjets(e) {
+    e.preventDefault();
+    const target = e.currentTarget;
     await fetch(`http://localhost:5678/api/works/${this.classList[0]}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
@@ -169,7 +171,7 @@ async function deleteProjets() {
             if (projet) {
                 projet.remove(); 
             }
-            this.closest(".gallery__item-modale").remove(); 
+            target.closest(".gallery__item-modale").remove();
             displayWorks();
             modaleProjets();
         } else if (response.status === 401) {
@@ -227,7 +229,7 @@ const closeModaleProjet = function(e) {
 
     modaleProjet.style.display = "none";
     modaleProjet = null;
-    location.reload();
+     location.reload();
 
     closeModale(e);
 };
@@ -280,8 +282,7 @@ async function addWork(event) {
 
             if (response.status === 201) {
                 alert("Projet ajouté avec succès :)");
-                closeModale(event);
-                displayWorks();
+                 closeModale(event);
                 modaleProjets(dataAdmin);
             } else if (response.status === 400) {
                 alert("Merci de remplir tous les champs");
