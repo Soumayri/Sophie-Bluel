@@ -82,14 +82,9 @@ const closeModale = function(e) {
 
     modale.setAttribute("aria-hidden", "true");
     modale.removeAttribute("aria-modal");
-    modale.style.display = "none";
 
     modale.querySelector(".js-modale-close").removeEventListener("click", closeModale);
-    modale.querySelector(".js-modale-stop").removeEventListener("click", stopPropagation);
-    modale.removeEventListener("click", closeModale);
-
-    modale = null;
-   
+    location.reload();
 };
 
 ///////////////////// Définit la "border" du click pour fermer la modale ////////////////
@@ -129,7 +124,6 @@ function adminPanel() {
             a.removeAttribute("aria-hidden");
             a.removeAttribute("style");
             AlreadyLogged.innerHTML = "logout";
-            AlreadyLogged.classList.add('logOut-btn')
             AlreadyLogged.addEventListener('click', function() {
                 if (AlreadyLogged.innerHTML === "logout") {
                     window.location.href = 'login.html'; // Redirection vers login.html
@@ -157,33 +151,20 @@ function deleteWork() {
 }
 
 /////////////////////////////// Supprimer le projet //////////////////////////////////
-
-async function deleteProjets(e) {
-    e.preventDefault();
-    const target = e.currentTarget;
+async function deleteProjets() {
     await fetch(`http://localhost:5678/api/works/${this.classList[0]}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
     })
     .then(response => {
         if (response.status === 204) {
-            const projet = document.querySelector(`.js-projet-${this.classList[0]}`);
-            if (projet) {
-                projet.remove(); 
-            }
-            target.closest(".gallery__item-modale").remove();
-            displayWorks();
-            modaleProjets();
+            refreshPage(this.classList[0]);
         } else if (response.status === 401) {
             alert("Vous n'êtes pas autorisé à supprimer ce projet, merci de vous connecter avec un compte valide");
             window.location.href = "login.html";
         }
-    })
-    .catch(error => {
-        console.error("Erreur:", error);
     });
 }
-
 
 /////////////////////////////////// Rafraichit les projets sans recharger la page /////////////////////////
 async function refreshPage(i) {
@@ -229,7 +210,7 @@ const closeModaleProjet = function(e) {
 
     modaleProjet.style.display = "none";
     modaleProjet = null;
-     location.reload();
+    location.reload();
 
     closeModale(e);
 };
@@ -282,7 +263,7 @@ async function addWork(event) {
 
             if (response.status === 201) {
                 alert("Projet ajouté avec succès :)");
-                 closeModale(event);
+                // closeModale(event);
                 modaleProjets(dataAdmin);
             } else if (response.status === 400) {
                 alert("Merci de remplir tous les champs");

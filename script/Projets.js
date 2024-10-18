@@ -19,7 +19,7 @@ async function getWorks() {
 async function displayWorksByCategory(categoryId) {
     const arrayWorks = await getWorks()
     let filteredWorks
-    if (categoryId === null || categoryId === "0") {
+    if (categoryId === null) {
         filteredWorks = arrayWorks
     } else {
         filteredWorks = arrayWorks.filter(work => work.categoryId === categoryId)
@@ -43,9 +43,7 @@ async function displayWorksByCategory(categoryId) {
 async function displayWorks() {
     displayWorksByCategory(null)
 }
-btnAll.addEventListener('click',() => {
-    displayWorksByCategory("0")
-})
+
 async function getCategories() {
     const response = await fetch("http://localhost:5678/api/categories")
     return await response.json();
@@ -53,6 +51,7 @@ async function getCategories() {
 
 async function displayCategoriesBtn() {
     const categories = await getCategories();
+    const categoryIds = categories.map(categorie => categorie.id)
     categories.forEach(categorie => {
         const btn = document.createElement("button");
         btn.textContent = categorie.name;
