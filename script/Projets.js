@@ -50,8 +50,20 @@ async function getCategories() {
 }
 
 async function displayCategoriesBtn() {
+   //Gestion du bouton ALL pour afficher tous les projets
+    btnAll.classList.add("sortBtn", "sortBtn-active"); 
+
+    btnAll.addEventListener('click', () => {
+       
+        document.querySelectorAll('.sortBtn').forEach((btn) => {
+            btn.classList.remove('sortBtn-active');
+        });
+    
+        btnAll.classList.add('sortBtn-active');
+        displayWorksByCategory(null); //
+    });
+// Gestion de l'affichage des boutons des autres catégories
     const categories = await getCategories();
-    const categoryIds = categories.map(categorie => categorie.id)
     categories.forEach(categorie => {
         const btn = document.createElement("button");
         btn.textContent = categorie.name;
@@ -159,12 +171,18 @@ async function modaleProjets() {
 const closeModale = function(e) {
     e.preventDefault();
     if (modale === null) return;
+// Retirer les events associés à cette modale
+document.querySelectorAll(".js-modale-projet").forEach(a => {
+    a.removeEventListener("click", openModaleProjet);
+});
+
 
     modale.setAttribute("aria-hidden", "true");
     modale.removeAttribute("aria-modal");
 
     modale.querySelector(".js-modale-close").removeEventListener("click", closeModale);
-    
+    // Remettre à null l'affichage
+    modale.style.display = "none";
 };
 
 ///////////////////// Définit la "border" du click pour fermer la modale ////////////////
@@ -240,6 +258,8 @@ async function deleteProjets() {
     .then(response => {
         if (response.status === 204) {
             refreshPage(this.classList[0]);
+            getWorks();
+            displayWorks();
         } else if (response.status === 401) {
             alert("Vous n'êtes pas autorisé à supprimer ce projet, merci de vous connecter avec un compte valide");
             window.location.href = "login.html";
@@ -278,16 +298,18 @@ const openModaleProjet = function(e) {
 const closeModaleProjet = function(e) {
     if (modaleProjet === null) return;
 
+
+
+   
     modaleProjet.setAttribute("aria-hidden", "true");
     modaleProjet.removeAttribute("aria-modal");
 
     modaleProjet.querySelector(".js-modale-close").removeEventListener("click", closeModaleProjet);
     modaleProjet.querySelector(".js-modale-stop").removeEventListener("click", stopPropagation);
-
+modaleProjet.querySelector(".js-modale-return").removeEventListener("click", backToModale);
     modaleProjet.style.display = "none";
     modaleProjet = null;
     closeModale(e);
-    adminPanel();
 };
 
 //////////////////////////// Retour au modale admin ///////////////////////////
@@ -338,7 +360,7 @@ async function addWork(event) {
 
             if (response.status === 201) {
                 alert("Projet ajouté avec succès :)");
-                // closeModale(event);
+                closeModaleProjet(event);
                 modaleProjets(dataAdmin);
                 getWorks();
                 displayWorks();
