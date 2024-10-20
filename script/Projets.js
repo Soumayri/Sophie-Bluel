@@ -164,7 +164,7 @@ const closeModale = function(e) {
     modale.removeAttribute("aria-modal");
 
     modale.querySelector(".js-modale-close").removeEventListener("click", closeModale);
-    location.reload();
+    
 };
 
 ///////////////////// Définit la "border" du click pour fermer la modale ////////////////
@@ -204,6 +204,7 @@ function adminPanel() {
             a.removeAttribute("aria-hidden");
             a.removeAttribute("style");
             AlreadyLogged.innerHTML = "logout";
+            AlreadyLogged.classList.add ("logOut")
             AlreadyLogged.addEventListener('click', function() {
                 if (AlreadyLogged.innerHTML === "logout") {
                     window.location.href = 'login.html'; // Redirection vers login.html
@@ -250,11 +251,6 @@ async function deleteProjets() {
 async function refreshPage(i) {
     modaleProjets(); // Re lance une génération des projets dans la modale admin
 
-    // Supprime le projet de la page d'accueil
-    const projet = document.querySelector(`.js-projet-${i}`);
-    if (projet) {
-        projet.style.display = "none";
-    }
 }
 
 ////////////////////////////////////////////////////
@@ -291,6 +287,7 @@ const closeModaleProjet = function(e) {
     modaleProjet.style.display = "none";
     modaleProjet = null;
     closeModale(e);
+    adminPanel();
 };
 
 //////////////////////////// Retour au modale admin ///////////////////////////
