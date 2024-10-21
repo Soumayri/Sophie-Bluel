@@ -36,7 +36,7 @@
       </a>
       <h2>Galerie photo</h2>
       <div class="js-admin-projets">
-   <!---------------------------- generation des photos dynamiquement dans la modale ---------------------------->
+        <!---------------------------- generation des photos dynamiquement dans la modale ---------------------------->
       </div>
       <a href="#modaleProjet" class="js-modale-projet">Ajouter un projet</a>
       <a class="btn-clear-admin" href="#">Supprimer la galerie</a>
@@ -47,7 +47,8 @@
     class="modale-projet"
     aria-hidden="true"
     style="display: none"
-  > <!--------------------------- MODULE Ajout de projet --------------------------------->
+  >
+    <!--------------------------- MODULE Ajout de projet --------------------------------->
     <div class="modale-wrapper js-modale-stop">
       <div class="modale-projet-logo">
         <a href="" class="js-modale-return">
@@ -58,18 +59,21 @@
         </a>
       </div>
       <h2>Ajout d'un projet</h2>
-      <form id="addPictureForm" class="modale-projet-form" action="" enctype="multipart/form-data">
+      <form
+        id="addPictureForm"
+        class="modale-projet-form"
+        action=""
+        enctype="multipart/form-data"
+      >
         <div class="form-group-photo">
           <i id="iconPhoto" class="fa-regular fa-image"></i>
           <label for="photo" id="labelPhoto"> Ajouter une photo</label>
           <input type="file" name="photo" id="photo" class="js-image" />
-        <div id="picturePreview" style="display: none">
-          <img id="picturePreviewImg" src="" alt="Image Preview">
+          <div id="picturePreview" style="display: none">
+            <img id="picturePreviewImg" src="" alt="Image Preview" />
+          </div>
         </div>
-      </div>
-        
-      </form>
-      
+
         <div class="form-group-title">
           <label for="titre">Titre</label>
           <input class="js-title" type="text" name="titre" id="titre" />
@@ -90,7 +94,7 @@
   <!-----------------------------------Affichage par Defaut  --------------------------------------->
   <body>
     <header>
-       <a href="index.html"
+      <a href="index.html"
         ><h1>
           Sophie Bluel
           <span>Architecte d'intérieur</span>
@@ -136,18 +140,18 @@
       <section id="portfolio">
         <div class="portfolioTitle">
           <h2>Mes Projets</h2>
-           <!--------------------------- Bouton Admin Modifier --------------------------------->
+          <!--------------------------- Bouton Admin Modifier --------------------------------->
           <div class="admin__modifer" aria-hidden="true" style="display: none">
             <i class="fa-solid fa-pen-to-square"></i>
             <a href="#modale" class="js-modale">Modifier</a>
           </div>
         </div>
-         <!--------------------------- Genere dynamiquement les boutons par catégorie--------------------------------->
+        <!--------------------------- Genere dynamiquement les boutons par catégorie--------------------------------->
         <div class="sort">
           <button class="sortBtn" id="0">Tous</button>
         </div>
         <div class="gallery">
-           <!--------------------------- Projets generes dynamiquement --------------------------------->
+          <!--------------------------- Projets generes dynamiquement --------------------------------->
         </div>
       </section>
       <section id="contact">
@@ -174,5 +178,4 @@
     </footer>
   </body>
   <script src="./script/Projets.js"></script>
- 
 </html>

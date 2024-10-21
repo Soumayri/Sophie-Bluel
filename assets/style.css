@@ -462,6 +462,7 @@ footer nav ul {
   background-color: #306685;
   color: white;
 }
+
 .js-add-work {
   color: #1d6154;
   background-color: white;
@@ -483,7 +484,7 @@ footer nav ul {
   top: 1239px;
   left: 600px;
   gap: 0px;
-  border-radius: 60px 0px 0px 0px;
+  border-radius: 20px 0px 20x 0px;
   cursor: pointer;
 }
 #picturePreviewImg {

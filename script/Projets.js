@@ -329,15 +329,16 @@ btnAjouterProjet.addEventListener("click", function(event) {
     addWork(event);
 });
 
+
 ///////////////////////////// Ajouter un projet //////////////////////////:
 async function addWork(event) {
     event.preventDefault();
-
+    
     const title = document.querySelector(".js-title").value;
     const categoryId = document.querySelector(".js-categoryId").value;
     const image = document.querySelector(".js-image").files[0];
-
     if (title === "" || categoryId === "" || image === undefined) {
+        
         alert("Merci de remplir tous les champs");
         return;
     } else if (categoryId !== "1" && categoryId !== "2" && categoryId !== "3") {
@@ -359,8 +360,11 @@ async function addWork(event) {
             });
 
             if (response.status === 201) {
-                alert("Projet ajouté avec succès :)");
-                closeModaleProjet(event);
+                alert("Projet ajouté avec succès :)");   
+                // Réinitialiser le formulaire
+                picturePreviewOff();
+                resetAddProjectModal();
+                // Mise à jour des works
                 modaleProjets(dataAdmin);
                 getWorks();
                 displayWorks();
@@ -377,6 +381,21 @@ async function addWork(event) {
         }
     }
 }
+//  Reinitialise la modale ajout après succés
+                
+
+function picturePreviewOff() {
+    const picturePreviewDiv = document.querySelector("#picturePreview");
+        picturePreviewDiv.style.display = "none";
+     labelPhoto.style.display = "flex";
+    labelPhoto.classList.add = ".form-group-photo label"
+        iconPhoto.style.display = "block";
+        picturePreviewImg.src = "";
+    
+};
+function resetAddProjectModal() {
+    Form.reset();
+};
 
 /////////////////////////// Aperçu des photos //////////////////////////////////
 document.addEventListener('DOMContentLoaded', function() {
@@ -396,10 +415,10 @@ document.addEventListener('DOMContentLoaded', function() {
             labelPhoto.style.display = "none";
             iconPhoto.style.display = "none";
         } else {
-            picturePreviewDiv.style.display = "none";
-            labelPhoto.style.display = "block";
-            iconPhoto.style.display = "block";
-            picturePreviewImg.src = "";
+            // picturePreviewDiv.style.display = "none";
+            // labelPhoto.style.display = "block";
+            // iconPhoto.style.display = "block";
+            // picturePreviewImg.src = "";
         }
     }
 
