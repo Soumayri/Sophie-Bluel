@@ -393,7 +393,9 @@ function picturePreviewOff() {
         picturePreviewImg.src = "";
     
 };
+
 function resetAddProjectModal() {
+    const Form = document.getElementById("addPictureForm");
     Form.reset();
 };
 
@@ -415,10 +417,7 @@ document.addEventListener('DOMContentLoaded', function() {
             labelPhoto.style.display = "none";
             iconPhoto.style.display = "none";
         } else {
-            // picturePreviewDiv.style.display = "none";
-            // labelPhoto.style.display = "block";
-            // iconPhoto.style.display = "block";
-            // picturePreviewImg.src = "";
+          
         }
     }
 
